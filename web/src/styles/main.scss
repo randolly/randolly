@@ -1,0 +1,237 @@
+@import "custom";
+
+html {
+  font-size: 16px;
+}
+body {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  // background-image: linear-gradient( #abbaab, #55555585);
+  background-color: white;
+}
+.stories {
+  display: flex;
+}
+a {
+  color: rgba(5, 153, 72, 0.938);
+  text-decoration: none;
+  & img:hover,
+  & figure:hover {
+    box-shadow: 0px 0px 5px 0px var(--primary);
+  }
+  svg {
+    float: left;
+  }
+}
+.btn {
+  font-family: inherit;
+  // font-weight: inherit;
+  // font-size: inherit;
+  color: black;
+  padding: 0.5em;
+  > svg {
+    float: left;
+  }
+}
+button {
+  font-family: inherit;
+  // font-size: inherit;
+  // font-weight: inherit;
+  > span {
+    margin: auto;
+  }
+}
+textarea {
+  resize: none;
+  font: inherit;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  font-size: 1.25em;
+  font-weight: 400;
+  &:active:focus:hover {
+    background-color: transparent;
+    outline: none;
+    border: none;
+  }
+}
+input {
+  border: none;
+  color: $dark;
+  background-color: transparent;
+  font-family: inherit;
+  &:active:focus {
+    outline: none;
+    border: none;
+  }
+}
+// a {
+//   white-space: nowrap;
+// }
+.hide-scroll {
+  /* This is the magic bit for Firefox */
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    /* This is the magic bit for WebKit */
+    display: none;
+  }
+}
+
+.message {
+  width: 100%;
+  color: $info;
+  display: flex;
+  justify-content: center;
+  font-size: 0.9em;
+  padding: 1em 0;
+}
+
+.form-group {
+  background-color: $input-bg;
+  border-bottom: 1px solid #2d88ff;
+  padding: 0.25em;
+}
+label.form-label {
+  margin-bottom: 0;
+  color: $text-muted;
+  font-size: 0.95em;
+}
+input[type="password"] {
+  background-color: darken($input-bg, 5%) !important;
+}
+.card-header {
+  font-weight: 800;
+  font-size: 1.25em;
+  border-bottom: 1px solid $border-color;
+}
+.card-footer {
+  border-top: 1px solid $border-color !important;
+}
+.bg-clear {
+  background-color: transparent !important;
+}
+
+a:not(.stretched-link) {
+  border-radius: 5%;
+  z-index: 500;
+}
+.high-index {
+  z-index: 1000;
+}
+.high-index1 {
+  z-index: 3000;
+}
+.higher-index {
+  z-index: 2000;
+}
+.ps-border {
+  border: 1px solid black;
+}
+@keyframes slide {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.list-group-item {
+  animation: slide 0.15s ease-out;
+}
+blockquote {
+  z-index: 1;
+  font: inherit;
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+}
+#user-popover {
+  box-shadow: 0 0 1rem rgba($dark, 0.35);
+}
+@media (max-width: 576px) {
+  .modal-dialog.modal-lg {
+    max-width: $modal-lg;
+    margin: 0 auto;
+    height: 100vh;
+    .modal-content {
+      border-radius: 0;
+      height: 100%;
+      max-height: 100%;
+      min-height: 0;
+    }
+  }
+}
+.modal-sm {
+  max-width: $modal-sm;
+  max-height: calc(100% - 5em);
+  margin: auto;
+  height: 100%;
+  .modal-content {
+    margin: auto 1em;
+    height: fit-content;
+  }
+}
+.popover {
+  min-width: $popover-min-width;
+}
+a + span.badge {
+  left: -10px;
+  top: -7.5px;
+  // content: attr(data-count);
+}
+.border-left-right-primary-custom {
+  border-left: 2px solid yellowgreen !important;
+  border-right: 2px solid yellowgreen !important;
+}
+.border-left-right-secondary-custom {
+  border-left: 2px solid yellowgreen !important;
+  border-right: 2px solid yellowgreen !important;
+}
+.break-all {
+  word-break: break-all;
+}
+.btn-lg {
+  color: black;
+}
+.link-btn {
+  border-radius: 4px;
+  color: #e4e6eb;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px;
+  border: none;
+  margin-top: 8px;
+  background-color: #5c89c4;
+  width: 25%;
+}
+.social-link {
+  display: flex;
+  margin-Left: 10px;
+  align-Items: center;
+  justify-Content: center;
+  margin-Top: 50px;
+}
+.fixed-background {
+  // background-color: #dee2e6;
+  // filter: blur(8px);
+  backdrop-filter: blur(20px);
+  // -webkit-filter: blur(8px);
+}
+.bg-white {
+  background-color: white;
+}
+.bg-blue {
+  background-color: #5b8fd1;
+}
+
+.options-list {
+  list-style: none;
+  padding: 0;
+}
+
+.options-list li {
+  margin-bottom: 0.5rem;
+}
+
