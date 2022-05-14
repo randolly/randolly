@@ -1,0 +1,28 @@
+{
+  "name": "randolly",
+  "version": "1.0.0",
+  "description": "🚀Building the future of social media management and an opensource alternative to ( Buffer. Hootsuite. MeetEdgar. Sprout Social. Postfity. Loomly. etc)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "if [ $CLIENT_ENV ]; then npm run postinstall-client; elif [ $SERVER_ENV ]; then npm run postinstall-server; else echo no environment detected, please set CLIENT_ENV or SERVER_ENV; fi",
+    "postinstall-client": "cd web && npm install && npm run build",
+    "postinstall-server": "cd api && npm install",
+    "deploy-server": "git push heroku prod"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/randolly/randolly.git"
+  },
+  "keywords": [
+    "randolly",
+    "cross-posting",
+    "scheduling"
+  ],
+  "author": "s-codes14",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/randolly/randolly/issues"
+  },
+  "homepage": "https://github.com/randolly/randolly#readme"
+}
