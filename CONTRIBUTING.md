@@ -19,7 +19,7 @@ All changes happen through pull requests. Pull requests are the best way to prop
 
 
 ## Issues
-> NOTE: If your bug is a **security vulnerability**, please DM me on https://twitter.com/s_codes14 or by https://discord.gg/s4Zt62EXjDto  discuss a way foward
+> NOTE: If your bug is a **security vulnerability**, please DM me on https://twitter.com/s_codes14 or by https://discord.gg/s4Zt62EXjD  discuss a way foward
 
 We use GitHub issues to track public bugs. Please ensure your description is
 clear and has sufficient instructions to be able to reproduce the issue. Report a bug by <a href="https://github.com/randolly/randolly/issues">opening a new issue</a>; it's that easy!
