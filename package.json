@@ -8,7 +8,8 @@
     "postinstall": "if [ $CLIENT_ENV ]; then npm run postinstall-client; elif [ $SERVER_ENV ]; then npm run postinstall-server; else echo no environment detected, please set CLIENT_ENV or SERVER_ENV; fi",
     "postinstall-client": "cd web && npm install && npm run build",
     "postinstall-server": "cd api && npm install",
-    "deploy-server": "git push heroku master"
+    "deploy-server": "git push heroku master",
+    "deploy-client-gh-pages": "cd web && npm run deploy"
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/randolly/randolly/issues"
   },
-  "homepage": "https://github.com/randolly/randolly#readme"
+  "homepage": "https://github.com/randolly/randolly#readme",
+  "dependencies": {
+    "gh-pages": "^4.0.0"
+  }
 }
