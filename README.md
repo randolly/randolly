@@ -27,6 +27,7 @@
 ## Branches
 
 - staging -> pr this branch for everything
+- master -> for production ready code
 
 ## Contributions
 
