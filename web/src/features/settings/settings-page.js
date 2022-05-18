@@ -16,7 +16,7 @@ export default (props) => {
       <div className="message font-weight-bold">Settings coming in future</div>
       <div>
         {" "}
-        We want to make rando highly customizable Inorder to embrace our
+        We want to make randolly highly customizable Inorder to embrace our
         creators uniqueness
       </div>
     </>

@@ -38,7 +38,7 @@ function SearchBar(props) {
             style={{ backgroundColor: "rgb(233,236,239)" }}
             size="sm"
             type="search"
-            placeholder="Search Rando❤ for posts, #hastags or @users"
+            placeholder="Search randolly❤ for posts, #hastags or @users"
             name="search"
             id="tsearch"
           />

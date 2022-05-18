@@ -7,7 +7,7 @@ export default (props) => {
     <>
       <Heading title="Chat room(s)" btnProfile backButton />
       <p className="flex min-vh-100 p-3 text-muted">
-        Rando wants to allow you to work with others therefore unleashing the
+        randolly wants to allow you to work with others therefore unleashing the
         full power of it being a productivity tool
         <br />
         We want to allow you to solve challenges together! and ensure that the

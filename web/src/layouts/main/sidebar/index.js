@@ -22,10 +22,10 @@ function Sidebar() {
       <footer className="m-2 mt-3 overflow-hidden">
         <small></small>
         <p className="text-black font-weight-bold mb-0 mt-1">
-          Rando, Whats expected??
+          randolly, Whats expected??
         </p>
         <div className="text-muted mb-1 mt-n1">
-          <small>@rando</small>
+          <small>@randolly</small>
         </div>
       </footer>
     </Col>

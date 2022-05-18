@@ -36,7 +36,7 @@ function Heading(props) {
           dispatch(logout());
         }}
         onMouseEnter={() => {
-          setBtnTxt("Rando will miss you❤");
+          setBtnTxt("randolly will miss you❤");
         }}
         onMouseLeave={() => {
           setBtnTxt("LogOut");

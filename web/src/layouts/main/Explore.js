@@ -32,7 +32,7 @@ export default (props) => {
               length={4}
             />
           </MediaQuery>
-          <Heading title="Rando Trends" />
+          <Heading title="randolly Trends" />
           {/* <Figure className="d-flex flex-column align-items-end">
                     <Figure.Image src="/img/explore-thumb-vector.svg" alt="" />
                     <Figure.Caption><small><a className="text-muted font-weight-lighter" href="https://www.freepik.com/free-photos-vectors/brochure">Brochure vector created by katemangostar - www.freepik.com</a></small></Figure.Caption>
