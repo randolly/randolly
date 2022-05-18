@@ -8,7 +8,7 @@ import { request } from "api";
 import {
   getFeed,
   parsePosts,
-  selectUserPosts
+  selectUserPosts,
 } from "features/posts/postsSlice";
 // import { scheduledPosts } from "features/schedule/scheduleSlice";
 import { userUpdated as authUserUpdated } from "store/authSlice";
@@ -114,7 +114,7 @@ export const getUserTimeline = createAsyncThunk(
 );
 export const getUserScheduled = createAsyncThunk(
   "users/getUserScheduled",
-  async (username, {dispatch}) => {
+  async (username, { dispatch }) => {
     // let { user_scheduled_page: p } = getState().users
     // let l = selectUserPosts(getState(), username).length
     // if (!l || l === 0) {
@@ -124,13 +124,13 @@ export const getUserScheduled = createAsyncThunk(
     // let url = `/api/user_scheduled/${username}?p=${p + 1}`
     let url = `/api/user_scheduled/${username}`;
 
-    let { posts, user } = await request(url, {dispatch});
+    let { posts, user } = await request(url, { dispatch });
     // console.log("posts ",posts)
     if (user) {
       dispatch(userAdded(user));
     }
     // dispatch(parsePosts(posts));
-    return posts.length
+    return posts.length;
   }
 );
 

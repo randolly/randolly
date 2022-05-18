@@ -1,72 +1,71 @@
-import React from 'react'
-import Home from './Home'
-import Sidebar from './sidebar'
-import MediaQuery from 'react-responsive'
-import { Row, Col } from 'react-bootstrap'
+import React from "react";
+import Home from "./Home";
+import Sidebar from "./sidebar";
+import MediaQuery from "react-responsive";
+import { Row, Col } from "react-bootstrap";
 
-import { Route, Switch } from 'react-router-dom'
-import PostDetail from 'features/posts/PostDetail'
-import Explore from './Explore'
-import Search from 'features/search/Search'
-import UserDetail from 'features/users/UserDetail'
-import Compose from 'features/posts/compose-modal'
-import Notifies from 'features/notify/notify-page'
-import Settings from 'features/settings/settings-page.js'
-import Menu from '../header/menu.js'
+import { Route, Switch } from "react-router-dom";
+import PostDetail from "features/posts/PostDetail";
+import Explore from "./Explore";
+import Search from "features/search/Search";
+import UserDetail from "features/users/UserDetail";
+import Compose from "features/posts/compose-modal";
+import Notifies from "features/notify/notify-page";
+import Settings from "features/settings/settings-page.js";
+import Menu from "../header/menu.js";
 
-import UserFriends from 'features/users/user-friends'
-import UserFollowers from 'features/users/user-followers'
+import UserFriends from "features/users/user-friends";
+import UserFollowers from "features/users/user-followers";
 
-import PostLikes from 'features/users/post-likes'
-import PostReposts from 'features/users/post-reposts'
+import PostLikes from "features/users/post-likes";
+import PostReposts from "features/users/post-reposts";
 
-import ChatRoom from 'comps/chat-room-placeholder'
-import calendar from 'features/schedule/calendar'
-import ScheduleDetail from 'features/schedule/scheduleDetail'
-import { useAlerts } from 'features/alerts/alertsContext'
-import { useEffect } from 'react'
+import ChatRoom from "comps/chat-room-placeholder";
+import calendar from "features/schedule/calendar";
+import ScheduleDetail from "features/schedule/scheduleDetail";
+import { useAlerts } from "features/alerts/alertsContext";
+import { useEffect } from "react";
 
-export default props => {
-    const { ensureCompleteProfile } = useAlerts()
-    useEffect(() => {
-        ensureCompleteProfile()
-        // eslint-disable-next-line
-    }, [])
-    return (
-        <Row>
-            <Col className="px-sm-4" sm="12" lg="8">
-                <Col className="border">
-                    <Switch>
-                        <Route path='/explore' component={Explore} />
-                        <Route path='/search' component={Search} />
+export default (props) => {
+  const { ensureCompleteProfile } = useAlerts();
+  useEffect(() => {
+    ensureCompleteProfile();
+    // eslint-disable-next-line
+  }, []);
+  return (
+    <Row>
+      <Col className="px-sm-4" sm="12" lg="8">
+        <Col className="border">
+          <Switch>
+            <Route path="/explore" component={Explore} />
+            <Route path="/search" component={Search} />
 
-                        <Route path='/post/:postId/likes' component={PostLikes} />
-                        <Route path='/post/:postId/reposts' component={PostReposts} />
-                        <Route path='/post/:postId' component={PostDetail} />
-                        <Route path='/user/:username/friends' component={UserFriends} />
-                        <Route path='/user/:username/followers' component={UserFollowers} />
-                        <Route path='/user/:username' component={UserDetail} />
-                        <Route path='/schedule/:date' component={ScheduleDetail} />
+            <Route path="/post/:postId/likes" component={PostLikes} />
+            <Route path="/post/:postId/reposts" component={PostReposts} />
+            <Route path="/post/:postId" component={PostDetail} />
+            <Route path="/user/:username/friends" component={UserFriends} />
+            <Route path="/user/:username/followers" component={UserFollowers} />
+            <Route path="/user/:username" component={UserDetail} />
+            <Route path="/schedule/:date" component={ScheduleDetail} />
 
+            <Route path="/notifications" component={Notifies} />
+            <Route path="/settings" component={Settings} />
+            <Route path="/menu" component={Menu} />
 
-                        <Route path='/notifications' component={Notifies} />
-                        <Route path='/settings' component={Settings} />
-                        <Route path='/menu' component={Menu} />
+            <Route path="/chats" component={ChatRoom} />
+            <Route path="/calendar" component={calendar} />
 
-                        <Route path='/chats' component={ChatRoom} />
-                        <Route path='/calendar' component={calendar} />
+            <Route path="/" component={Home} />
+          </Switch>
+          <Route path="/compose/post" component={Compose} />
+        </Col>
+      </Col>
 
-                        <Route path='/' component={Home} />
-                    </Switch>
-                    <Route path='/compose/post' component={Compose} />
-                </Col>
-            </Col>
-
-            <MediaQuery minWidth={992}>
-                <Col lg="4" className="vh-100 overflow-y-auto hide-scroll sticky-top">
-                    <Sidebar />
-                </Col>
-            </MediaQuery>
-        </Row>
-    )
-}
+      <MediaQuery minWidth={992}>
+        <Col lg="4" className="vh-100 overflow-y-auto hide-scroll sticky-top">
+          <Sidebar />
+        </Col>
+      </MediaQuery>
+    </Row>
+  );
+};

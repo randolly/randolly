@@ -21,7 +21,7 @@ class Cron {
             place
           );
           const myTime = timeZone.getZonedTime(new Date(), place);
-// below is buggy because some serious maths is needed
+          // below is buggy because some serious maths is needed
           if (
             scheduledTime.year === myTime.year &&
             scheduledTime.month === myTime.month &&
@@ -32,8 +32,7 @@ class Cron {
             myTime.seconds >= scheduledTime.seconds &&
             myTime.milliseconds >= scheduledTime.milliseconds
           ) {
-            
-            let post1 = obj
+            let post1 = obj;
             let { text, image, cross_post_options, ...rest } = post1;
             post1 = {
               text,
@@ -44,11 +43,9 @@ class Cron {
             await Post.addOne({ user_id: obj.user }, post1);
             await postSchema.findByIdAndUpdate(obj._id, { posted: true });
             console.log("success");
-            
           }
         }
       });
-      
     });
   }
 }

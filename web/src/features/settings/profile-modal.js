@@ -80,7 +80,7 @@ export default (props) => {
 
   // image upload and preview
   const [selectedFile, setSelectedFile] = useState();
-//   const [preview, setPreview] = useState();
+  //   const [preview, setPreview] = useState();
 
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
@@ -143,25 +143,25 @@ export default (props) => {
         identifier: "Website URL",
       });
 
-      let profile_image_url_https
-        if (selectedFile) {
-            const data = new FormData();
-      data.append("file", selectedFile);
-      data.append("upload_preset", "images");
-      data.append("cloud_name", "testrando");
-      let response = await fetch(
-        "https://api.cloudinary.com/v1_1/testrando/image/upload",
-        {
-          method: "post",
-          body: data,
-        }
-      );
-      let dataResponse = await response.json();
-      console.log(dataResponse.url)
-      profile_image_url_https = dataResponse.url
-        } else {
-            profile_image_url_https = profile;
-        }
+      let profile_image_url_https;
+      if (selectedFile) {
+        const data = new FormData();
+        data.append("file", selectedFile);
+        data.append("upload_preset", "images");
+        data.append("cloud_name", "testrando");
+        let response = await fetch(
+          "https://api.cloudinary.com/v1_1/testrando/image/upload",
+          {
+            method: "post",
+            body: data,
+          }
+        );
+        let dataResponse = await response.json();
+        console.log(dataResponse.url);
+        profile_image_url_https = dataResponse.url;
+      } else {
+        profile_image_url_https = profile;
+      }
       let body = {
         name: _name,
         description,
@@ -170,7 +170,7 @@ export default (props) => {
         website: _website,
         profile_image_url_https,
       };
-      console.log(body)
+      console.log(body);
       let action = await dispatch(updateUserDetails(body));
       if (action.type === "users/updateUserDetails/fulfilled") {
         handleClose();
@@ -284,9 +284,7 @@ export default (props) => {
                       class="profile-pic"
                       style={{ display: "none" }}
                     />
-                    <label for="profile-pic">
-                      Upload pic
-                    </label>
+                    <label for="profile-pic">Upload pic</label>
                   </div>
                 </Row>
                 <Form.Group controlId="name">

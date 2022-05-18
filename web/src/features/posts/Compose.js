@@ -71,8 +71,8 @@ class Compose extends React.Component {
     let currentDate = new Date();
     if (currentDate >= this.state.value) {
       this.setState({
-        value: currentDate
-      })
+        value: currentDate,
+      });
     }
   };
   SCHandleOpen = () => {
@@ -227,61 +227,73 @@ class Compose extends React.Component {
             />
           </Link>
           <Media.Body>
-          <Link to="/compose/post">
-            <textarea
-              className="w-100 p-2"
-              style={{ maxHeight: "80vh" }}
-              name="text"
-              onChange={this.handleChange}
-              onKeyPress={this.handleLine}
-              value={this.state.editor_text}
-              placeholder="What's happening?"
-            ></textarea>
-            {/* <img src={this.state.image[0]} alt="show picture" ></img> */}
+            <Link to="/compose/post">
+              <textarea
+                className="w-100 p-2"
+                style={{ maxHeight: "80vh" }}
+                name="text"
+                onChange={this.handleChange}
+                onKeyPress={this.handleLine}
+                value={this.state.editor_text}
+                placeholder="What's happening?"
+              ></textarea>
+              {/* <img src={this.state.image[0]} alt="show picture" ></img> */}
 
-            <div className="border-top d-flex justify-content-between align-items-center pt-2">
-              <div style={{ fontSize: "1.5em" }}>
-                <Link
-                  className="text-primary btn btn-lg rounded-circle btn-naked-primary p-2"
-                  to="/compose/post"
-                >
-                  <FontAwesomeIcon size="lg" icon={faSmile} className='mb-1 text-muted'/>
-                </Link>
+              <div className="border-top d-flex justify-content-between align-items-center pt-2">
+                <div style={{ fontSize: "1.5em" }}>
+                  <Link
+                    className="text-primary btn btn-lg rounded-circle btn-naked-primary p-2"
+                    to="/compose/post"
+                  >
+                    <FontAwesomeIcon
+                      size="lg"
+                      icon={faSmile}
+                      className="mb-1 text-muted"
+                    />
+                  </Link>
 
-                {/* onclick this button to get image */}
+                  {/* onclick this button to get image */}
 
-                <div className="text-primary btn btn-lg rounded-circle btn-naked-primary p-2">
-                  <input
-                    onChange={(e) => {
-                      this.setState({ image: e.target.files[0] });
-                      console.log(e?.target?.files);
-                    }}
-                    type="file"
-                    id="file"
-                    class="file"
-                    style={{ display: "none" }}
-                  />
-                  <label for="file">
-                    <FontAwesomeIcon size="lg" icon={faImage} className='mb-1 text-muted'/>
-                  </label>
+                  <div className="text-primary btn btn-lg rounded-circle btn-naked-primary p-2">
+                    <input
+                      onChange={(e) => {
+                        this.setState({ image: e.target.files[0] });
+                        console.log(e?.target?.files);
+                      }}
+                      type="file"
+                      id="file"
+                      class="file"
+                      style={{ display: "none" }}
+                    />
+                    <label for="file">
+                      <FontAwesomeIcon
+                        size="lg"
+                        icon={faImage}
+                        className="mb-1 text-muted"
+                      />
+                    </label>
+                  </div>
+                  <div
+                    className="text-primary btn btn-lg rounded-circle btn-naked-primary p-2"
+                    onClick={this.SCHandleOpen}
+                  >
+                    <FontAwesomeIcon
+                      size="lg"
+                      icon={faCalendar}
+                      className="mb-1 text-muted"
+                    />
+                  </div>
                 </div>
-                <div
-                  className="text-primary btn btn-lg rounded-circle btn-naked-primary p-2"
-                  onClick={this.SCHandleOpen}
-                >
-                  <FontAwesomeIcon size="lg" icon={faCalendar} className='mb-1 text-muted'/>
+                <div className="right">
+                  <button
+                    onClick={this.handleSubmit}
+                    disabled={!this.state.active}
+                    className="btn btn-primary rounded-pill px-3 py-2 font-weight-bold"
+                  >
+                    Post
+                  </button>
                 </div>
               </div>
-              <div className="right">
-                <button
-                  onClick={this.handleSubmit}
-                  disabled={!this.state.active}
-                  className="btn btn-primary rounded-pill px-3 py-2 font-weight-bold"
-                >
-                  Post
-                </button>
-              </div>
-            </div>
             </Link>
           </Media.Body>
         </Media>

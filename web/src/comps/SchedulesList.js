@@ -13,14 +13,14 @@ import UserLink from "comps/user-link";
 import PostTag from "comps/post-tag";
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons/faEllipsisH";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { deleteSchedule } from 'features/schedule/scheduleSlice';
-import { useDispatch } from 'react-redux'
+import { deleteSchedule } from "features/schedule/scheduleSlice";
+import { useDispatch } from "react-redux";
 
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import TryAgain from "./TryAgain";
 
 export default function PostsList(props) {
-  let dispatch = useDispatch()
+  let dispatch = useDispatch();
   let { posts = [], status, getPosts } = props;
   useEffect(
     useCallback(() => {
@@ -49,9 +49,13 @@ export default function PostsList(props) {
       <ListGroup variant="flush" className="border-bottom" m>
         {posts.length > 0
           ? posts.map((post) => {
-            {/* console.log(post) */}
+              {
+                /* console.log(post) */
+              }
 
-              {/* let { retweeted_by } = post; */}
+              {
+                /* let { retweeted_by } = post; */
+              }
               return (
                 <ListGroup.Item
                   className="px-3"
@@ -97,7 +101,7 @@ export default function PostsList(props) {
                           {post.user.name}
                         </UserLink>
                         {/* tick */}
-                         <span className="text-muted mr-1">
+                        <span className="text-muted mr-1">
                           @{post.user.screen_name}
                         </span>
                         <pre className="m-0 text-muted">{" - "}</pre>
@@ -110,39 +114,35 @@ export default function PostsList(props) {
                         {/* float: right */}
                         {/* <span className="text-dark justify-content-end align-items-center position-static" style={{right: '0px'}}><FontAwesomeIcon className="m-2" size="lg" icon={faEllipsisH} /></span> */}
                         <div className="ml-auto d-lg-flex justify-content-end ">
-                        <Dropdown  className="bg-clear high-index1">
-                          <Dropdown.Toggle
-                            className="btn btn-naked-primary rounded-pill"
-                            id="comment-dropdown"
-                          >
-                            <FontAwesomeIcon
-                              className="m-2"
-                              size="xs"
-                              icon={faEllipsisH}
-                            />
-                          </Dropdown.Toggle>
-                          <Dropdown.Menu
-                            alignRight
-                            className=" high-index1"
-                          >
-                            <Dropdown.Item
-                              className="high-index1"
-                              as="button"
-                              onClick={(e) => dispatch(deleteSchedule(post))}
+                          <Dropdown className="bg-clear high-index1">
+                            <Dropdown.Toggle
+                              className="btn btn-naked-primary rounded-pill"
+                              id="comment-dropdown"
                             >
-                              Delete
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              as={Link}
-                              className="high-index1"
-                              to={`/compose/post?reschedule=${post.id_str}`}
-                            >
-                             Update
-                            </Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Dropdown>
+                              <FontAwesomeIcon
+                                className="m-2"
+                                size="xs"
+                                icon={faEllipsisH}
+                              />
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu alignRight className=" high-index1">
+                              <Dropdown.Item
+                                className="high-index1"
+                                as="button"
+                                onClick={(e) => dispatch(deleteSchedule(post))}
+                              >
+                                Delete
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                as={Link}
+                                className="high-index1"
+                                to={`/compose/post?reschedule=${post.id_str}`}
+                              >
+                                Update
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
                         </div>
-                       
                       </Row>
                       <Row className="mb-n1 mt-1">
                         <blockquote className="mb-1 mw-100">

@@ -5,5 +5,5 @@ var TwSchema = new mongoose.Schema({
   access_token_secret: { type: String, required: false, default: null },
 });
 module.exports = {
-  TwSchema
-}
+  TwSchema,
+};

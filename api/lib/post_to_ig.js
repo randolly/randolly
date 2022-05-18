@@ -1,9 +1,8 @@
 const User = require("../models/user.model.js");
 const encrpt = require("../lib/encrpt");
 const Instagram = require("instagram-web-api");
- 
+
 class PostToIg {
- 
   async getIgToken(id) {
     try {
       let doc = await User.findOne({ _id: id }, function (err, doc) {
@@ -11,15 +10,13 @@ class PostToIg {
           console.log("there is an error 😦 ");
         }
         // console.log("accestoken" + doc.twitter.access_token);
-        
       });
       return new Promise((res, _rej) => {
         res({
           username: encrpt.decrpt(doc.instagram.username),
           password: encrpt.decrpt(doc.instagram.password),
-      })
-    })
-      
+        });
+      });
     } catch (e) {
       console.log("Error 😦 getting ig data", e);
     }
@@ -28,7 +25,7 @@ class PostToIg {
   PostToIg(id, text, url) {
     this.getIgToken(id).then(async (cred) => {
       try {
-        console.log("posting to instagram...")
+        console.log("posting to instagram...");
         const { username, password } = cred;
         const client = new Instagram({
           username: username,

@@ -2,7 +2,8 @@ var fs = require("fs");
 // import fetch err
 // const fetch = require("node-fetch");
 // below line is a workaroumd to the above error
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = (...args) =>
+  import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
 class Base64Encoding {
   convert_url_to_base64(url) {
@@ -17,7 +18,6 @@ class Base64Encoding {
       });
     });
   }
-
 
   convert_url_to_buffer(url) {
     return new Promise(async (res, rej) => {

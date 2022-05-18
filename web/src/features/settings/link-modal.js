@@ -2,13 +2,7 @@
 // updateUserDetails - linkUserAccounts
 import React from "react";
 import { useState } from "react";
-import {
-  Modal,
-  Form,
-  Alert,
-  ProgressBar,
-  Button,
-} from "react-bootstrap";
+import { Modal, Form, Alert, ProgressBar, Button } from "react-bootstrap";
 // import {TextField} from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 // import { filterInput } from "utils/helpers";
@@ -21,27 +15,21 @@ import {
 import { firebaseConfig } from "../../firebase";
 import { useInitFbSDK } from "./link/signup";
 import { initializeApp } from "firebase/app";
-import {
-  getAuth,
-  signInWithPopup,
-  TwitterAuthProvider
-} from "firebase/auth";
-import { useSelector, useDispatch } from 'react-redux'
-import { updateIg, updateTw, updateFb } from 'features/users/usersSlice'
-// import {FacebookLogin } from "react-facebook-login";        
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
-
-
+import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
+import { useSelector, useDispatch } from "react-redux";
+import { updateIg, updateTw, updateFb } from "features/users/usersSlice";
+// import {FacebookLogin } from "react-facebook-login";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
 export default (props) => {
-    let history = useHistory()
-    let dispatch = useDispatch()
-    let { user } = useSelector(state => state.auth)
-    let { user_link_accounts_status: status } = useSelector(state => state.users)
-    // var pages;
- 
+  let history = useHistory();
+  let dispatch = useDispatch();
+  let { user } = useSelector((state) => state.auth);
+  let { user_link_accounts_status: status } = useSelector(
+    (state) => state.users
+  );
+  // var pages;
 
-  
   const isFbSDKInitialized = useInitFbSDK();
   console.log(isFbSDKInitialized);
   const [Igopen, setIgOpen] = useState(false);
@@ -49,36 +37,44 @@ export default (props) => {
   const [password, set_password] = useState();
   const [username, set_username] = useState();
   const [loading, set_loading] = useState(false);
-  
-  // linked or not
-  const linkedFb = user.facebook.llToken || user.facebook.token?"linked Facebook":"Link Facebook";
-  const linkedIg = user.instagram.username || user.instagram.password?"linked Instagram":"Link Instagram";
-  const linkedTw = user.twitter.access_token || user.twitter.access_token_secret?"linked Twitter":"Link Twitter";
-  // const linkedLi = user.linkedin || user.linkedin?"linked Facebook":"Link Facebook";
 
+  // linked or not
+  const linkedFb =
+    user.facebook.llToken || user.facebook.token
+      ? "linked Facebook"
+      : "Link Facebook";
+  const linkedIg =
+    user.instagram.username || user.instagram.password
+      ? "linked Instagram"
+      : "Link Instagram";
+  const linkedTw =
+    user.twitter.access_token || user.twitter.access_token_secret
+      ? "linked Twitter"
+      : "Link Twitter";
+  // const linkedLi = user.linkedin || user.linkedin?"linked Facebook":"Link Facebook";
 
   const [pages, setPages] = useState(null);
   // const [data2, setData2] = useState({});
 
   let [error, setError] = useState(null);
-  let [progress, setProgress] = useState(10)
+  let [progress, setProgress] = useState(10);
 
   let dirtyProgress = () => {
     if (progress < 90)
-        setTimeout(() => { setProgress(90) }, 250)
-    return true
-}
+      setTimeout(() => {
+        setProgress(90);
+      }, 250);
+    return true;
+  };
   const redirected = new URLSearchParams(history.location.search).get(
     "redirected"
   );
 
   const handleClose = () => {
-    if (status !== 'error' && !error) {
-      if (redirected === 'true')
-          history.push('/home')
-      else
-          history.goBack();
-  }
+    if (status !== "error" && !error) {
+      if (redirected === "true") history.push("/home");
+      else history.goBack();
+    }
     // if (redirected === "true") {
     //   history.push("/home");
     // } else {
@@ -86,7 +82,7 @@ export default (props) => {
     // }
   };
   const handleSubmit = async () => {
-    setError(null)
+    setError(null);
     //     try {
     //         let body = {
     //           fb_token: fbUserAccessToken,
@@ -99,18 +95,17 @@ export default (props) => {
     //         let action = await dispatch(linkUserAccounts(body))
     //         if (action.type === 'users/linkUserAccounts/fulfilled') {
 
-                handleClose()
-        //     }
-        // } catch (err) {
-        //     setError(err.message)
-        // }
+    handleClose();
+    //     }
+    // } catch (err) {
+    //     setError(err.message)
+    // }
   };
 
-
   //   /* --------------------------------------------------------
-//    *                      INSTAGRAM
-//    * --------------------------------------------------------
-//    */
+  //    *                      INSTAGRAM
+  //    * --------------------------------------------------------
+  //    */
   const IgSubmit = () => {
     if (username === null || password === null) {
       alert("please fill all form");
@@ -119,11 +114,11 @@ export default (props) => {
     set_loading(true);
     set_username(username);
     set_password(password);
-let body ={ 
-username: username,
-password: password,
-}
-dispatch(updateIg(body))
+    let body = {
+      username: username,
+      password: password,
+    };
+    dispatch(updateIg(body));
     set_loading(false);
     IgHandleClose();
   };
@@ -131,16 +126,15 @@ dispatch(updateIg(body))
     setIgOpen(true);
   };
   const IgHandleClose = () => {
-
     setIgOpen(false);
   };
   //   /* --------------------------------------------------------
-//    *                      FACEBOOK
-//    * --------------------------------------------------------
-//    */
+  //    *                      FACEBOOK
+  //    * --------------------------------------------------------
+  //    */
   const FbHandleClickOpen = () => {
     // if (fbUserAccessToken !== null || fbUserAccessToken !== undefined) {
-      setFbOpen(true);
+    setFbOpen(true);
     // }
   };
   const FbHandleClose = () => {
@@ -153,18 +147,14 @@ dispatch(updateIg(body))
     // dispatch(updateFb(data))
   };
   const getFacebookPages = (accesstoken) => {
-    window.FB.api(
-      "me/accounts",
-      { access_token: accesstoken },
-      (response) => {
-        let pages1 = response.data;
-        console.log(pages1)
-        setPages(pages1)
-        if (pages !== undefined ){
-        FbHandleClickOpen()
-        }
+    window.FB.api("me/accounts", { access_token: accesstoken }, (response) => {
+      let pages1 = response.data;
+      console.log(pages1);
+      setPages(pages1);
+      if (pages !== undefined) {
+        FbHandleClickOpen();
       }
-    );
+    });
   };
   // // Checks if the user is logged in to Facebook
   // React.useEffect(() => {
@@ -189,7 +179,7 @@ dispatch(updateIg(body))
   //       const accesstoken = response.authResponse?.accessToken;
   //       setFbUserAccessToken(accesstoken);
   //       // console.log(accesstoken);
-        
+
   //       // getFacebookPages(fbUserAccessToken);
   //       getFacebookPages();
   //       FbHandleClickOpen();
@@ -201,35 +191,34 @@ dispatch(updateIg(body))
   //   console.log("User cancelled login or did not fully authorize.  😦");
   // }
   // };
-   const responseFacebook = (response) => {
+  const responseFacebook = (response) => {
     console.log(response);
     // console.log(response.accessToken)
 
     const accesstoken = response.authResponse?.accessToken;
     // const userID = response.authResponse?.userID
-        // setFbUserAccessToken(accesstoken);
-        console.log(accesstoken)
-        // const updatedValue = {
-        //   token: response.authResponse?.accessToken,
-        // }
-        // setData2({
-        //  ...data2,
-        //  ...updatedValue
-        // })
-        getFacebookPages(accesstoken);
-  }
-
+    // setFbUserAccessToken(accesstoken);
+    console.log(accesstoken);
+    // const updatedValue = {
+    //   token: response.authResponse?.accessToken,
+    // }
+    // setData2({
+    //  ...data2,
+    //  ...updatedValue
+    // })
+    getFacebookPages(accesstoken);
+  };
 
   const setFbData = (data) => {
-    console.log(data)
+    console.log(data);
     const pageId = data.id;
     const fbPageAccessToken = data.access_token;
     // setPageId(pageId);
     // setFbPageAccessToken(fbPageAccessToken);
-      // token: fbUserAccessToken,
+    // token: fbUserAccessToken,
     // logInToFB(logindata);
     // console.log(data2)
-    console.log(window.FB.getAccessToken())
+    console.log(window.FB.getAccessToken());
     // console.log(fb_token)
     // var rtoken = fbUserAccessToken ? (fbUserAccessToken):(fb_token)
 
@@ -240,57 +229,55 @@ dispatch(updateIg(body))
       pageAccessToken: fbPageAccessToken,
     };
     // console.log(accesstoken)
-    console.log(data1)
-    dispatch(updateFb(data1))
-    
+    console.log(data1);
+    dispatch(updateFb(data1));
+
     FbHandleClose();
   };
- 
 
   //   /* --------------------------------------------------------
-//    *                      TWITTER
-//    * --------------------------------------------------------
-//    */
-const LogInToTw = () => {
+  //    *                      TWITTER
+  //    * --------------------------------------------------------
+  //    */
+  const LogInToTw = () => {
+    initializeApp(firebaseConfig);
 
-  initializeApp(firebaseConfig);
+    const provider = new TwitterAuthProvider();
+    const auth = getAuth();
+    // const auth = app;
+    // let { user } = useSelector(state => state.auth)
+    // let dispatch = useDispatch()
 
-  const provider = new TwitterAuthProvider();
-  const auth = getAuth();
-  // const auth = app;
-  // let { user } = useSelector(state => state.auth)
-  // let dispatch = useDispatch()
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
+        // You can use these server side with your app's credentials to access the Twitter API.
+        const credential = TwitterAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const secret = credential.secret;
+        let data = {
+          access_token: token,
+          access_token_secret: secret,
+        };
+        // console.log("updating twitter for")
+        dispatch(updateTw(data));
 
+        // The signed-in user info.
+        // const user = result.user;
+        // console.log(user);
+        // ...
+      })
+      .catch((error) => {
+        console.log(error);
+        // setError(error.message)
+        // ...
+      });
+  };
 
-  signInWithPopup(auth, provider).then((result) => {
-      // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
-      // You can use these server side with your app's credentials to access the Twitter API.
-      const credential = TwitterAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      const secret = credential.secret;
-      let data = {
-        access_token: token,
-        access_token_secret: secret,
-      };
-    // console.log("updating twitter for")
-        dispatch(updateTw(data))
-      
-
-      // The signed-in user info.
-      // const user = result.user;
-      // console.log(user);
-      // ...
-    }).catch((error) => {
-      console.log(error);
-      // setError(error.message)
-      // ...
-    });
-};
-
- //   /* --------------------------------------------------------
-//    *                      LinkedIn
-//    * --------------------------------------------------------
-//    */
+  //   /* --------------------------------------------------------
+  //    *                      LinkedIn
+  //    * --------------------------------------------------------
+  //    */
 
   return (
     <>
@@ -312,34 +299,36 @@ const LogInToTw = () => {
           </Modal.Title>
         </Modal.Header>
 
-            {status === 'pending' && (
-                dirtyProgress() &&
-                <ProgressBar className="rounded-0" now={progress} />
-            )}
-            {status === "error" && (
-                <Alert variant="danger" className="mb-0 font-weight-bold text-white">
-                    Error updating details, try again!
-                </Alert>
-            )}
-            {error && (
-                <Alert variant="danger" className="mb-0 font-weight-bold text-white">
-                    {error}
-                </Alert>
-            )}
+        {status === "pending" && dirtyProgress() && (
+          <ProgressBar className="rounded-0" now={progress} />
+        )}
+        {status === "error" && (
+          <Alert variant="danger" className="mb-0 font-weight-bold text-white">
+            Error updating details, try again!
+          </Alert>
+        )}
+        {error && (
+          <Alert variant="danger" className="mb-0 font-weight-bold text-white">
+            {error}
+          </Alert>
+        )}
         <Modal.Body className="pt-1 pb-0 px-0">
           {/* <FacebookLoginButton onClick={FbPopUp}>
             <span>Link Facebook</span>
           </FacebookLoginButton> */}
           <FacebookLogin
-    appId={process.env.REACT_APP_FB_APP_ID}
-    isMobile={true}
-    redirectUri={"https://test-rando1.herokuapp.com/"}
-    disableMobileRedirect={true}
-    autoLoad={false}
-    callback={responseFacebook}
-    render={renderProps => (<FacebookLoginButton onClick={renderProps.onClick} >
-            <span>{linkedFb}</span>
-          </FacebookLoginButton>)}/>
+            appId={process.env.REACT_APP_FB_APP_ID}
+            isMobile={true}
+            redirectUri={"https://test-rando1.herokuapp.com/"}
+            disableMobileRedirect={true}
+            autoLoad={false}
+            callback={responseFacebook}
+            render={(renderProps) => (
+              <FacebookLoginButton onClick={renderProps.onClick}>
+                <span>{linkedFb}</span>
+              </FacebookLoginButton>
+            )}
+          />
           <TwitterLoginButton onClick={LogInToTw}>
             <span>{linkedTw}</span>
           </TwitterLoginButton>
@@ -356,7 +345,7 @@ const LogInToTw = () => {
             <div></div>
             <div className="right">
               <button
-                disabled={status === 'pending'}
+                disabled={status === "pending"}
                 type="submit"
                 onClick={handleSubmit}
                 className="btn btn-primary rounded-pill px-3 py-1 font-weight-bold"
@@ -382,17 +371,19 @@ const LogInToTw = () => {
         <Modal.Body>
           {pages ? (
             pages.map((data, index) => (
-            <div>
-              <button onClick={() => setFbData(data)} className="btn confirm-btn">
-                {data.name}{" "}
-              </button>
-              <br />
-            </div>
-          ))
+              <div>
+                <button
+                  onClick={() => setFbData(data)}
+                  className="btn confirm-btn"
+                >
+                  {data.name}{" "}
+                </button>
+                <br />
+              </div>
+            ))
           ) : (
             <div>Loading Pages</div>
-          )
-          }
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={FbHandleClose} variant="primary">

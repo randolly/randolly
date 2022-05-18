@@ -29,8 +29,7 @@ const schedulesAdapter = createEntityAdapter({
 const initialState = schedulesAdapter.getInitialState({
   schedules_status: "idle", // || 'loading', 'error', 'done'
   date_scheduled_status: "idle", // || 'loading', 'error', 'done'
-  compose_schedule_status: 'idle', // || 'pending', 'error',
-  
+  compose_schedule_status: "idle", // || 'pending', 'error',
 });
 
 // First, create the thunk
@@ -42,11 +41,11 @@ const initialState = schedulesAdapter.getInitialState({
 //   }
 // )
 const parseSchedules = (schedules) => (dispatch) => {
-  schedules = schedules.map(post => ({
+  schedules = schedules.map((post) => ({
     ...post,
     user: post.user.screen_name,
     backup_user: post.user,
-}))
+  }));
   dispatch(schedulesAdded(schedules));
 };
 export const getscheduledPosts = createAsyncThunk(
@@ -72,31 +71,28 @@ export const getscheduledPostsByDate = createAsyncThunk(
   }
 );
 export const deleteSchedule = createAsyncThunk(
-  'schedules/delete',
+  "schedules/delete",
   // async (post, { dispatch }) => {
   async (post) => {
-
-      // dispatch(postUnReposted(post))
-      // return request(`/api/unpost`, { body: post, dispatch })
-      return request(`/api/unschedule`, { body: post})
-
+    // dispatch(postUnReposted(post))
+    // return request(`/api/unpost`, { body: post, dispatch })
+    return request(`/api/unschedule`, { body: post });
   }
-)
+);
 
 export const composeSchedule = createAsyncThunk(
-  'schedules/composePost',
-  async ({ body, url = '/api/post' }, { dispatch }) => {
-      try {
-          let { post } = await request(url, { body, dispatch })
-          if (post)
-              post.user.following = true //work around till server shows this correctly on all posts/users
-          return dispatch(parseSchedules([post]))
-      } catch (err) {
-          console.log(err)
-          throw err
-      }
+  "schedules/composePost",
+  async ({ body, url = "/api/post" }, { dispatch }) => {
+    try {
+      let { post } = await request(url, { body, dispatch });
+      if (post) post.user.following = true; //work around till server shows this correctly on all posts/users
+      return dispatch(parseSchedules([post]));
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
   }
-)
+);
 
 // Then, handle actions in your reducers:
 const scheduleSlice = createSlice({
@@ -125,11 +121,15 @@ const scheduleSlice = createSlice({
     [getscheduledPostsByDate.fulfilled]: (state) => {
       state.date_scheduled_status = "done";
     },
-    [composeSchedule.pending]: state => { state.compose_schedule_status = 'pending' },
-        [composeSchedule.rejected]: state => { state.compose_schedule_status = 'error' },
-        [composeSchedule.fulfilled]: state => {
-            state.compose_schedule_status = 'idle'
-        },
+    [composeSchedule.pending]: (state) => {
+      state.compose_schedule_status = "pending";
+    },
+    [composeSchedule.rejected]: (state) => {
+      state.compose_schedule_status = "error";
+    },
+    [composeSchedule.fulfilled]: (state) => {
+      state.compose_schedule_status = "idle";
+    },
   },
 });
 const { reducer, actions } = scheduleSlice;
@@ -189,5 +189,6 @@ export const selectUserSchedulesByDate = createSelector(
 
 export const selectScheduleById = createSelector(
   [selectAllschedules, (state, scheduleId) => scheduleId],
-  (schedules, scheduleId) => schedules.find(schedule => (schedule.id_str === scheduleId))
-)
+  (schedules, scheduleId) =>
+    schedules.find((schedule) => schedule.id_str === scheduleId)
+);

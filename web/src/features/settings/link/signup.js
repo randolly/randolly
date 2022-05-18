@@ -19,7 +19,7 @@ const injectFbSDKScript = () => {
 
 export const useInitFbSDK = () => {
   const [isInitialized, setIsInitialized] = React.useState(false);
-  
+
   // Initializes the SDK once the script has been loaded
   // https://developers.facebook.com/docs/javascript/quickstart/#loading
   window.fbAsyncInit = function () {

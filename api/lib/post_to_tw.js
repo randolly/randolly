@@ -2,8 +2,7 @@
 const User = require("../models/user.model.js");
 const encrpt = require("../lib/encrpt");
 const Twit = require("twit");
-const dotenv = require('dotenv')
-
+const dotenv = require("dotenv");
 
 class PostToTw {
   async getTwToken(id) {
@@ -13,17 +12,15 @@ class PostToTw {
           console.log("there is an error 😦 ");
         }
         // console.log("accestoken" + doc.twitter.access_token);
-        
       });
       return new Promise((res, _rej) => {
         res({
-        consumer_key: process.env.TW_CONSUMER_KEY,
-        consumer_secret: process.env.TW_CONSUMER_SECRET,
-        access_token: encrpt.decrpt(doc.twitter.access_token),
-        access_token_secret: encrpt.decrpt(doc.twitter.access_token_secret),
-      })
-    })
-      
+          consumer_key: process.env.TW_CONSUMER_KEY,
+          consumer_secret: process.env.TW_CONSUMER_SECRET,
+          access_token: encrpt.decrpt(doc.twitter.access_token),
+          access_token_secret: encrpt.decrpt(doc.twitter.access_token_secret),
+        });
+      });
     } catch (e) {
       console.log("Error", e);
     }
@@ -62,9 +59,9 @@ class PostToTw {
                   params,
                   function (err, data, response) {
                     if (data) {
-                      console.log("posted to twitter :) with your image")
-                    };
-                    if (err){
+                      console.log("posted to twitter :) with your image");
+                    }
+                    if (err) {
                       console.log("there is an error 😦 ");
                     }
                     return;
@@ -87,21 +84,20 @@ class PostToTw {
         access_token: token.access_token,
         access_token_secret: token.access_token_secret,
       });
-      
+
       cred.post(
         "statuses/update",
         { status: text },
         function (err, data, response) {
           if (data) {
-            console.log("posted to twitter :) without image")
-          };
-          if (err){
+            console.log("posted to twitter :) without image");
+          }
+          if (err) {
             console.log("there is an error 😦 ");
           }
         }
       );
     });
-    
   }
 }
 
