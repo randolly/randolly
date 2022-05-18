@@ -20,7 +20,7 @@ class Navigationbar extends React.Component {
               className="m-auto"
               width={150}
               heigh={150}
-              src="/untitled.svg"
+              src="/img/logoWithText01.png"
               alt="logo"
             />
           </Navbar.Brand>

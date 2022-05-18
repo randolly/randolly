@@ -7,7 +7,7 @@ import FollowCard from "./sidebar/FollowCard";
 import Users from "features/users/UserSuggests";
 import Heading from "comps/Heading";
 import { Route, Switch } from "react-router-dom";
-// import { Figure } from 'react-bootstrap'
+import { Figure } from 'react-bootstrap'
 
 export default (props) => {
   return (
@@ -28,15 +28,14 @@ export default (props) => {
           <MediaQuery maxWidth={992}>
             <FollowCard
               noPop
-              title="Follow more users to see their posts"
+              title="Follow other  Creators"
               length={4}
             />
           </MediaQuery>
-          <Heading title="randolly Trends" />
-          {/* <Figure className="d-flex flex-column align-items-end">
-                    <Figure.Image src="/img/explore-thumb-vector.svg" alt="" />
-                    <Figure.Caption><small><a className="text-muted font-weight-lighter" href="https://www.freepik.com/free-photos-vectors/brochure">Brochure vector created by katemangostar - www.freepik.com</a></small></Figure.Caption>
-                </Figure> */}
+         <Figure className="d-flex flex-column align-items-end">
+                    <Figure.Image src="/img/creation-process.png" alt="" />
+                    
+                </Figure>
           <Trends />
         </Route>
       </Switch>
