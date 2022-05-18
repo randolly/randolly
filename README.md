@@ -11,6 +11,8 @@
   <a href="https://discord.gg/s4Zt62EXjD">Community</a>
 </h3>
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/32a37a49-bfba-4f61-aec7-462495054f79/deploy-status)](https://app.netlify.com/sites/randollyapp/deploys)
+
 ---
 
 
