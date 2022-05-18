@@ -9,7 +9,7 @@
     "postinstall-client": "cd web && npm install && npm run build",
     "postinstall-server": "cd api && npm install",
     "deploy-server": "git push heroku master",
-    "deploy-client-gh-pages": "cd web && npm run deploy"
+    "deploy-client": "cd web && npm run deploy"
   },
   "repository": {
     "type": "git",
