@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write './**/*.{js,css,json}'",
     "postinstall": "if [ $CLIENT_ENV ]; then npm run postinstall-client; elif [ $SERVER_ENV ]; then npm run postinstall-server; else echo no environment detected, please set CLIENT_ENV or SERVER_ENV; fi",
     "postinstall-client": "cd web && npm install && npm run build",
     "postinstall-server": "cd api && npm install",
     "deploy-server": "git push heroku master",
-    "deploy-client-gh-pages": "cd web && npm run deploy"
+    "deploy-client": "cd web && npm run deploy"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
   },
   "homepage": "https://github.com/randolly/randolly#readme",
   "dependencies": {
-    "gh-pages": "^4.0.0"
+    "gh-pages": "^4.0.0",
+    "prettier": "^2.6.2"
   }
 }

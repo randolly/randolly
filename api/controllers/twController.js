@@ -6,40 +6,50 @@ const {
   serializeUser,
   serializeUsers,
 } = require("../serializers/user.serializer");
-const assert = require('assert')
-
+const assert = require("assert");
 
 // hey
 class TwController {
- updateAcc(req, res) {
-    
+  updateAcc(req, res) {
     try {
       let data = {
         access_token: encrpt.encrypt(req.body.access_token),
         access_token_secret: encrpt.encrypt(req.body.access_token_secret),
       };
-      let user = req.user
-      assert.ok(user)
+      let user = req.user;
+      assert.ok(user);
       User.findOne({ "twitter.access_token": null }).then((tw_data) => {
         if (tw_data.length < 1) {
           //if cred do not exist, create
           console.log("so called tw_data: " + tw_data);
-          User.findByIdAndUpdate({_id: user._id}, {$addToSet: {twitter: data}}, {runValidators:true, new: true}).then((d) => {
-           return res.json({
+          User.findByIdAndUpdate(
+            { _id: user._id },
+            { $addToSet: { twitter: data } },
+            { runValidators: true, new: true }
+          )
+            .then((d) => {
+              return res.json({
                 success: true,
                 message: "tw credentials uploaded successfully",
                 data: d,
               });
-          }).catch((err) => res.json({ success: false, message: err }))
+            })
+            .catch((err) => res.json({ success: false, message: err }));
         } else {
           //if cred exist, update
-          User.findByIdAndUpdate({_id: user._id}, {$set: {twitter: data}}, {runValidators:true, new: true}).then((d) => {
-           return res.json({
+          User.findByIdAndUpdate(
+            { _id: user._id },
+            { $set: { twitter: data } },
+            { runValidators: true, new: true }
+          )
+            .then((d) => {
+              return res.json({
                 success: true,
                 message: "tw credentials uploaded successfully",
                 data: d,
               });
-          }).catch((err) => res.json({ success: false, message: err }))
+            })
+            .catch((err) => res.json({ success: false, message: err }));
         }
       });
     } catch (e) {

@@ -19,9 +19,9 @@ exports.createPost = async (req, res, next) => {
 
     // check if post is scheduled then post normally else post to SC(scheduled post which will go through cron job)
     if (req.body.schedule == null) {
-      let { text, image,socials, ...rest } = post;
+      let { text, image, socials, ...rest } = post;
       text = filterInput(text, "html", { max_length: 500, identifier: "Post" });
-      let cross_post_options = socials
+      let cross_post_options = socials;
       post = {
         text,
         image,
@@ -36,19 +36,18 @@ exports.createPost = async (req, res, next) => {
         message: "Successfully posted",
       });
     } else {
-      let { text, image, schedule, timeZone,socials, ...rest } = post;
+      let { text, image, schedule, timeZone, socials, ...rest } = post;
       text = filterInput(text, "html", { max_length: 500, identifier: "Post" });
       let posted = false;
       function getCurrentDate(d) {
-
         const t = new Date(d);
-        const date = ('0' + t.getDate()).slice(-2);
-        const month = ('0' + (t.getMonth() + 1)).slice(-2);
+        const date = ("0" + t.getDate()).slice(-2);
+        const month = ("0" + (t.getMonth() + 1)).slice(-2);
         const year = t.getFullYear();
         return `${date}-${month}-${year}`;
       }
       let yymmdd = getCurrentDate(schedule);
-      let cross_post_options = socials
+      let cross_post_options = socials;
       post = {
         text,
         image,
@@ -78,7 +77,7 @@ exports.updatePost = async (req, res, next) => {
     let post = req.body;
     console.log(post);
     const postId = req.params.postId;
-    let { text,  ...rest } = post;
+    let { text, ...rest } = post;
     assert.ok(user);
     // let { text } = req.body
     text = filterInput(text, "html", { max_length: 500, identifier: "Post" });
@@ -202,7 +201,7 @@ exports.updateSchedule = async (req, res, next) => {
     let post = req.body;
     console.log(post);
     const postId = req.params.postId;
-    let { text,  ...rest } = post;
+    let { text, ...rest } = post;
     assert.ok(user);
     // let { text } = req.body
     text = filterInput(text, "html", { max_length: 500, identifier: "Post" });
@@ -211,13 +210,17 @@ exports.updateSchedule = async (req, res, next) => {
     // }
     if (user._id == post.userID) {
       // update post
-      SCPost.findByIdAndUpdate(post.postID, { text: text }, function (err, docs) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("Updated Post : ", docs);
+      SCPost.findByIdAndUpdate(
+        post.postID,
+        { text: text },
+        function (err, docs) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log("Updated Post : ", docs);
+          }
         }
-      });
+      );
     } else {
       console.log("you dont have permission to update this post");
     }
@@ -227,7 +230,6 @@ exports.updateSchedule = async (req, res, next) => {
 };
 
 exports.deleteSchedule = async (req, res, next) => {
-
   try {
     let post = req.body;
     let user = req.user;
@@ -238,24 +240,24 @@ exports.deleteSchedule = async (req, res, next) => {
     // console.log("user", user)
 
     if (user._id == post.user._id) {
-    SCPost.findOneAndDelete({ _id: post._id }, function (err, docs) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Deleted Post : ", docs);
-      }
-    });
-  } else {
-    console.log("you dont have permission to delete this post");
-  }
+      SCPost.findOneAndDelete({ _id: post._id }, function (err, docs) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Deleted Post : ", docs);
+        }
+      });
+    } else {
+      console.log("you dont have permission to delete this post");
+    }
 
-  res.json({
-    message: "Succesfully deleted",
-  });
-} catch (err) {
-  next(err);
-}
-}
+    res.json({
+      message: "Succesfully deleted",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 exports.getPost = async (req, res, next) => {
   try {
     let postId = req.params.postId;

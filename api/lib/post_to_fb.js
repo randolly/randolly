@@ -4,7 +4,6 @@ const User = require("../models/user.model.js");
 const encrpt = require("../lib/encrpt");
 const fs = require("fs");
 
-
 class PostToFb {
   async getFbToken(id) {
     try {
@@ -13,46 +12,43 @@ class PostToFb {
           console.log("there is an error 😦 ");
         }
         // console.log("accestoken" + doc.twitter.access_token);
-        
       });
       return new Promise((res, _rej) => {
         res({
           accessToken: encrpt.decrpt(doc.facebook.llToken),
           pageId: encrpt.decrpt(doc.facebook.pageId),
           pageAccessToken: encrpt.decrpt(doc.facebook.llPageAccessToken),
-      })
-    })
-      
+        });
+      });
     } catch (e) {
       console.log("Error", e);
     }
   }
-      // let data = fb.linked.linked_socials.facebook
-      // return new Promise((res, _rej) => {
-      //   res({
-      //     accessToken: encrpt.decrpt(data.token),
-      //     pageId: encrpt.decrpt(data.pageId),
-      //     pageAccessToken: encrpt.decrpt(data.pageAccessToken),
-      //   });
-      // });
+  // let data = fb.linked.linked_socials.facebook
+  // return new Promise((res, _rej) => {
+  //   res({
+  //     accessToken: encrpt.decrpt(data.token),
+  //     pageId: encrpt.decrpt(data.pageId),
+  //     pageAccessToken: encrpt.decrpt(data.pageAccessToken),
+  //   });
+  // });
 
-      // post data method
-postData = (url, data, callback) => {
+  // post data method
+  postData = (url, data, callback) => {
+    axios
+      .post(
+        "https://graph.facebook.com/v12.0/" + url,
+        {},
+        {
+          params: data,
+        }
+      )
+      .then(callback)
+      .catch((error) => {
+        console.log("😦 an error occured " + error);
+      });
+  };
 
-  axios
-    .post(
-      "https://graph.facebook.com/v12.0/" + url,
-      {},
-      {
-        params: data,
-      }
-    )
-    .then(callback)
-    .catch((error) => {
-      console.log("😦 an error occured " + error);
-    });
-}
-  
   postToFbWithImg(id, text, image) {
     // remember to change the following into page
     this.getFbToken(id).then((token) => {
@@ -60,7 +56,7 @@ postData = (url, data, callback) => {
       if (token.pageId === null || token.pageId === undefined) {
         // FB.setAccessToken(token.accessToken);
 
-         this.postData(
+        this.postData(
           "me/photos",
           {
             access_token: token.accessToken,
@@ -133,7 +129,7 @@ postData = (url, data, callback) => {
         );
       }
     });
-  };
+  }
 }
 
 module.exports = new PostToFb();

@@ -12,14 +12,14 @@ import UserLink from "comps/user-link";
 import PostTag from "comps/post-tag";
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons/faEllipsisH";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { uncreatePost } from 'features/posts/postsSlice'
-import { useDispatch } from 'react-redux'
+import { uncreatePost } from "features/posts/postsSlice";
+import { useDispatch } from "react-redux";
 
 import { useBottomScrollListener } from "react-bottom-scroll-listener";
 import TryAgain from "./TryAgain";
 
 export default function PostsList(props) {
-  let dispatch = useDispatch()
+  let dispatch = useDispatch();
 
   let { posts = [], status, getPosts, no_reply_tag } = props;
   useEffect(
@@ -108,39 +108,35 @@ export default function PostsList(props) {
                         {/* float: right */}
                         {/* <span className="text-dark justify-content-end align-items-center position-static" style={{right: '0px'}}><FontAwesomeIcon className="m-2" size="lg" icon={faEllipsisH} /></span> */}
                         <div className="ml-auto d-lg-flex justify-content-end ">
-                        <Dropdown  className="bg-clear high-index1">
-                          <Dropdown.Toggle
-                            className="btn btn-naked-primary rounded-pill"
-                            id="comment-dropdown"
-                          >
-                            <FontAwesomeIcon
-                              className="m-2"
-                              size="xs"
-                              icon={faEllipsisH}
-                            />
-                          </Dropdown.Toggle>
-                          <Dropdown.Menu
-                            alignRight
-                            className=" high-index1"
-                          >
-                            <Dropdown.Item
-                              className="high-index1"
-                              as="button"
-                              onClick={(e) => dispatch(uncreatePost(post))}
+                          <Dropdown className="bg-clear high-index1">
+                            <Dropdown.Toggle
+                              className="btn btn-naked-primary rounded-pill"
+                              id="comment-dropdown"
                             >
-                              Delete
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              as={Link}
-                              className="high-index1"
-                              to={`/compose/post?update=${post.id_str}`}
-                            >
-                             Update
-                            </Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Dropdown>
+                              <FontAwesomeIcon
+                                className="m-2"
+                                size="xs"
+                                icon={faEllipsisH}
+                              />
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu alignRight className=" high-index1">
+                              <Dropdown.Item
+                                className="high-index1"
+                                as="button"
+                                onClick={(e) => dispatch(uncreatePost(post))}
+                              >
+                                Delete
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                as={Link}
+                                className="high-index1"
+                                to={`/compose/post?update=${post.id_str}`}
+                              >
+                                Update
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
                         </div>
-                       
                       </Row>
                       <Row className="mb-n1 mt-1">
                         <blockquote className="mb-1 mw-100">

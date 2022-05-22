@@ -38,7 +38,6 @@ exports.getNotifications = async (req, res, next) => {
     );
     if (doc) {
       res.json({ notifications: await serializeNotifs(doc) });
-     
     } else {
       res.json({ notifications: null, message: "Empty" });
     }

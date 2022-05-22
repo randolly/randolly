@@ -15,10 +15,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-regular-svg-icons/faImage";
 import { faSmile } from "@fortawesome/free-regular-svg-icons/faSmile";
 import { faCalendar } from "@fortawesome/free-regular-svg-icons/faCalendar";
-import { faShareSquare} from "@fortawesome/free-solid-svg-icons/faShareSquare";
+import { faShareSquare } from "@fortawesome/free-solid-svg-icons/faShareSquare";
 import { useSelector, useDispatch } from "react-redux";
 import { composePost, selectPostById } from "./postsSlice";
-import {selectScheduleById, composeSchedule} from "features/schedule/scheduleSlice";
+import {
+  selectScheduleById,
+  composeSchedule,
+} from "features/schedule/scheduleSlice";
 
 import QuotedPost from "comps/quoted-post";
 
@@ -30,7 +33,6 @@ import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DateTimePicker from "@mui/lab/DateTimePicker";
-
 
 export default (props) => {
   let location = useLocation();
@@ -45,7 +47,9 @@ export default (props) => {
   let updatePost = useSelector((state) => selectPostById(state, updateId));
 
   let scheduleId = new URLSearchParams(location.search).get("reschedule");
-  let schedulePost = useSelector((state) => selectScheduleById(state, scheduleId));
+  let schedulePost = useSelector((state) =>
+    selectScheduleById(state, scheduleId)
+  );
 
   const replyId = new URLSearchParams(location.search).get("reply_to");
   let replyPost = useSelector((state) => selectPostById(state, replyId));
@@ -61,24 +65,22 @@ export default (props) => {
     },
     {
       name: "Twitter",
-    }
-    
+    },
   ];
-  
 
   let ta = useRef(null);
   const [height, setHeight] = useState("auto");
-  
+
   // let initialText = updatePost?updatePost.text : ""
   // let initialText = schedulePost?schedulePost.text : ""
-let initialText
-if(updatePost){
-  initialText = updatePost.text
-}else if(schedulePost){
-  initialText = schedulePost.text
-}else{
-  initialText = ""
-}
+  let initialText;
+  if (updatePost) {
+    initialText = updatePost.text;
+  } else if (schedulePost) {
+    initialText = schedulePost.text;
+  } else {
+    initialText = "";
+  }
   const [editor_text, setText] = useState(initialText);
   const [image, setImage] = useState(null);
   const [value, setValue] = useState(new Date());
@@ -95,7 +97,7 @@ if(updatePost){
     new Array(socialOptions.length).fill(false)
   );
 
-  const [checkedSocials, setCheckedSocials] = useState(null)
+  const [checkedSocials, setCheckedSocials] = useState(null);
 
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
@@ -119,17 +121,17 @@ if(updatePost){
     setImage(e.target.files[0]);
   };
 
- let SCHandleClose = () => {
+  let SCHandleClose = () => {
     setSCopen(false);
     let currentDate = new Date();
     if (currentDate >= value) {
-      setValue(currentDate)
+      setValue(currentDate);
     }
   };
   let CPHandleClose = () => {
     setCPopen(false);
   };
- let SCHandleOpen = () => {
+  let SCHandleOpen = () => {
     setSCopen(true);
   };
   let CPHandleOpen = () => {
@@ -140,8 +142,11 @@ if(updatePost){
       index === position ? !item : item
     );
     // console.log(updatedCheckedState)
-    const final = socialOptions.map((obj, index) => ({platform: obj.name, status: updatedCheckedState[index]}))
-    setCheckedSocials(final)
+    const final = socialOptions.map((obj, index) => ({
+      platform: obj.name,
+      status: updatedCheckedState[index],
+    }));
+    setCheckedSocials(final);
     setCheckedState(updatedCheckedState);
   };
 
@@ -227,7 +232,6 @@ if(updatePost){
           schedule: schedule,
           timeZone: timeZone,
           socials: checkedSocials,
-
         };
       }
       let url;
@@ -245,7 +249,7 @@ if(updatePost){
       let action = await dispatch(composePost({ body, url }));
       setActive(true);
       if (action.type === "posts/composePost/fulfilled") handleClose();
-    } else if (updateId){
+    } else if (updateId) {
       let url = `/api/post/${updateId}/update`;
       let text;
       try {
@@ -257,18 +261,17 @@ if(updatePost){
         return setError(err.message);
       }
       let userId = updatePost.user._id;
-       let body = {
-         ...updatePost,
+      let body = {
+        ...updatePost,
         text: text,
         userID: userId,
         postID: updatePost._id,
-       }
+      };
       //  if this doesn't work I will build my own way of posting to the server
-       let action = await dispatch(composePost({ body, url }));
+      let action = await dispatch(composePost({ body, url }));
       setActive(true);
       if (action.type === "posts/composePost/fulfilled") handleClose();
-     }
-     else if (scheduleId){
+    } else if (scheduleId) {
       let url = `/api/reschedule/${scheduleId}`;
       let text;
       try {
@@ -280,23 +283,22 @@ if(updatePost){
         return setError(err.message);
       }
       let userId = schedulePost.user._id;
-       let body = {
-         ...schedulePost,
+      let body = {
+        ...schedulePost,
         text: text,
         userID: userId,
         postID: schedulePost._id,
-       }
-       console.log(body)
+      };
+      console.log(body);
       //  if this doesn't work I will build my own way of posting to the server
-       let action = await dispatch(composeSchedule({ body, url }));
+      let action = await dispatch(composeSchedule({ body, url }));
       setActive(true);
       // console.log(action.type)
       if (action.type === "schedules/composePost/fulfilled") handleClose();
       // if(action){
-        // handleClose()
+      // handleClose()
       // }
-     }
-     else {
+    } else {
       if (!active) return;
       let text;
       try {
@@ -320,7 +322,6 @@ if(updatePost){
         schedule: schedule,
         timeZone: timeZone,
         socials: checkedSocials,
-
       };
       let url;
       // if replying or "retweeting"
@@ -335,10 +336,10 @@ if(updatePost){
           quoted_status: quotePost._id,
         };
       }
-      
+
       let action = await dispatch(composePost({ body, url }));
       setActive(true);
-      
+
       if (action.type === "posts/composePost/fulfilled") handleClose();
     }
   };
@@ -414,12 +415,8 @@ if(updatePost){
                 value={editor_text}
                 placeholder="What's happening?"
               ></textarea>
-              
-              <Image
-            fluid
-            rounded={true}
-            src={preview}
-            alt='' />
+
+              <Image fluid rounded={true} src={preview} alt="" />
               <QuotedPost
                 className="mb-2 mt-n5"
                 post={replyPost || quotePost}
@@ -437,7 +434,11 @@ if(updatePost){
                 overlay={picker}
               >
                 <button className="text-primary btn btn-lg rounded-circle btn-naked-primary p-2">
-                  <FontAwesomeIcon size="lg" icon={faSmile} className='mb-1 text-muted'/>
+                  <FontAwesomeIcon
+                    size="lg"
+                    icon={faSmile}
+                    className="mb-1 text-muted"
+                  />
                 </button>
               </OverlayTrigger>
               <div className="text-primary btn btn-lg rounded-circle btn-naked-primary p-2">
@@ -449,23 +450,35 @@ if(updatePost){
                   style={{ display: "none" }}
                 />
                 <label for="file1">
-                  <FontAwesomeIcon size="lg" icon={faImage} className='mb-1 text-muted'/>
+                  <FontAwesomeIcon
+                    size="lg"
+                    icon={faImage}
+                    className="mb-1 text-muted"
+                  />
                 </label>
               </div>
               <div
-                  className="text-primary btn btn-lg rounded-circle btn-naked-primary p-2"
-                  onClick={SCHandleOpen}
-                >
-                  <FontAwesomeIcon size="lg" icon={faCalendar} className='mb-1 text-muted'/>
-                </div>
-                <div
-                  className="text-primary btn btn-lg rounded-circle btn-naked-primary p-2"
-                  onClick={CPHandleOpen}
-                >
-                <FontAwesomeIcon size="lg" icon={faShareSquare} className='mb-1 text-muted'/>
+                className="text-primary btn btn-lg rounded-circle btn-naked-primary p-2"
+                onClick={SCHandleOpen}
+              >
+                <FontAwesomeIcon
+                  size="lg"
+                  icon={faCalendar}
+                  className="mb-1 text-muted"
+                />
+              </div>
+              <div
+                className="text-primary btn btn-lg rounded-circle btn-naked-primary p-2"
+                onClick={CPHandleOpen}
+              >
+                <FontAwesomeIcon
+                  size="lg"
+                  icon={faShareSquare}
+                  className="mb-1 text-muted"
+                />
 
                 {/* <FontAwesomeIcon size="lg" icon="fa-solid fa-share-nodes" /> */}
-                </div>
+              </div>
             </div>
             <div className="right">
               <button
@@ -480,75 +493,78 @@ if(updatePost){
         </Modal.Footer>
       </Modal>
       <Modal
-          enforceFocus={false}
-          show={SCopen}
-          onHide={SCHandleClose}
-          backdrop="static"
-          keyboard={false}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Schedule post</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DateTimePicker
-                renderInput={(props) => <TextField {...props} />}
-                label="choose date or time"
-                value={value}
-                onChange={(newValue) => {
-                  console.log(newValue);
-                  setValue(newValue);
-                }}
-              />
-            </LocalizationProvider>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={SCHandleClose} variant="primary">
-              Schedule
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        enforceFocus={false}
+        show={SCopen}
+        onHide={SCHandleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Schedule post</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DateTimePicker
+              renderInput={(props) => <TextField {...props} />}
+              label="choose date or time"
+              value={value}
+              onChange={(newValue) => {
+                console.log(newValue);
+                setValue(newValue);
+              }}
+            />
+          </LocalizationProvider>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={SCHandleClose} variant="primary">
+            Schedule
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
-        <Modal
-          enforceFocus={false}
-          show={CPopen}
-          onHide={CPHandleClose}
-          backdrop="static"
-          keyboard={false}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Choose where to post</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-             
+      <Modal
+        enforceFocus={false}
+        show={CPopen}
+        onHide={CPHandleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Choose where to post</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
           <ul className="options-list">
-        {socialOptions.map(({ name }, index) => {
-          return (
-            <li key={index}>
-              <div className="form-check">
-                  <input
-                    type="checkbox"
-                    id={`custom-checkbox-${index}`}
-                    class="form-check-input"
-                    name={name}
-                    value={name}
-                    checked={checkedState[index]}
-                    onChange={() => CPhandleOnChange(index)}
-                  />
-                  <label class="form-check-label" htmlFor={`custom-checkbox-${index}`}>{name}</label>
-              </div>
-            </li>
-          );
-        })}
-        </ul>
-
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={CPHandleClose} variant="primary">
-              Ok
-            </Button>
-          </Modal.Footer>
-        </Modal>
+            {socialOptions.map(({ name }, index) => {
+              return (
+                <li key={index}>
+                  <div className="form-check">
+                    <input
+                      type="checkbox"
+                      id={`custom-checkbox-${index}`}
+                      class="form-check-input"
+                      name={name}
+                      value={name}
+                      checked={checkedState[index]}
+                      onChange={() => CPhandleOnChange(index)}
+                    />
+                    <label
+                      class="form-check-label"
+                      htmlFor={`custom-checkbox-${index}`}
+                    >
+                      {name}
+                    </label>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={CPHandleClose} variant="primary">
+            Ok
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

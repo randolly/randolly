@@ -2,40 +2,49 @@ const User = require("../models/user.model");
 const encrpt = require("../lib/encrpt");
 // const IgPostModel = require("../models/ig_post_model");
 // const cloudinary = require("../lib/cloud");
-const assert = require('assert')
-
+const assert = require("assert");
 
 class IgController {
-
   updateAcc(req, res) {
-    
     try {
       let data = {
         username: encrpt.encrypt(req.body.username),
         password: encrpt.encrypt(req.body.password),
       };
-      let user = req.user
-      assert.ok(user)
+      let user = req.user;
+      assert.ok(user);
       User.findOne({ "instagram.username": null }).then((ig_data) => {
         if (ig_data.length < 1) {
           //if cred do not exist, create
           console.log("so called ig_data: " + ig_data);
-          User.findByIdAndUpdate({_id: user._id}, {$addToSet: {instagram: data}}, {runValidators:true, new: true}).then((d) => {
+          User.findByIdAndUpdate(
+            { _id: user._id },
+            { $addToSet: { instagram: data } },
+            { runValidators: true, new: true }
+          )
+            .then((d) => {
               return res.json({
                 success: true,
                 message: "ig credentials uploaded successfully",
                 data: d,
               });
-          }).catch((err) => res.json({ success: false, message: err }))
+            })
+            .catch((err) => res.json({ success: false, message: err }));
         } else {
           //if cred exist, update
-          User.findByIdAndUpdate({_id: user._id}, {$set: {instagram: data}}, {runValidators:true, new: true}).then((d) => {
-           return res.json({
+          User.findByIdAndUpdate(
+            { _id: user._id },
+            { $set: { instagram: data } },
+            { runValidators: true, new: true }
+          )
+            .then((d) => {
+              return res.json({
                 success: true,
                 message: "ig credentials uploaded successfully",
                 data: d,
               });
-          }).catch((err) => res.json({ success: false, message: err }))
+            })
+            .catch((err) => res.json({ success: false, message: err }));
         }
       });
     } catch (e) {
