@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "🚀Building the future of social media management and an opensource alternative to ( Buffer. Hootsuite. MeetEdgar. Sprout Social. Postfity. Loomly. etc)",
   "main": "index.js",
+  "engines": {
+    "node": "15.x"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write './**/*.{js,css,json}'",
